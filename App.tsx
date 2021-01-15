@@ -6,6 +6,6 @@ export const App = () => (
     userAgent="skole-native-app"
     source={{ uri: 'https://www.skoleapp.com' }}
     allowsBackForwardNavigationGestures
-    pullToRefreshEnabled
+    pullToRefreshEnabled // TODO: Remove this when we have a better pull to refresh enabled in the web app.
   />
 );
