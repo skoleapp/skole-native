@@ -7,6 +7,7 @@
     "android:prod": "yarn android --variant=release",
     "ios": "react-native run-ios",
     "ios:prod": "yarn ios --configuration Release",
+    "xcode:open": "open ios/skole.xcworkspace",
     "start": "react-native start",
     "test": "jest",
     "type-check": "tsc",
