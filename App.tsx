@@ -7,5 +7,6 @@ export const App = () => (
     source={{ uri: 'https://www.skoleapp.com' }}
     allowsBackForwardNavigationGestures
     pullToRefreshEnabled // TODO: Remove this when we have a better pull to refresh enabled in the web app.
+    decelerationRate="normal"
   />
 );
