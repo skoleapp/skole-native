@@ -13,10 +13,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [1.0.1] - 2021-01-16
 
-### Fixed
-
-- Fix scrolling being janky.
-
 ## [1.0.0] - 2021-01-15
 
 ### Added
