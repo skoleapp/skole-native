@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "915248471360",
+    "project_id": "skole-d01bc",
+    "storage_bucket": "skole-d01bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915248471360:android:34bdd3052d8fc2e316eea5",
+        "android_client_info": {
+          "package_name": "com.skole"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915248471360-23mn1bch0an3sn36rbfkufve7u744p45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAOlqnDGFpIfBUolokC82nDf8VsNMXTpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915248471360-23mn1bch0an3sn36rbfkufve7u744p45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
