@@ -10,5 +10,17 @@
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"]
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "import/prefer-default-export": "off", // Allows us to use named exports.
+    "import/extensions": "off", // Import with file extensions.
+    "import/no-unresolved": "off", // Import from non-module files.
+    // The rules below are not enabled by default, resulting in an ESLint error.
+    "@typescript-eslint/no-loop-func": "on",
+    "@typescript-eslint/no-redeclare": "on",
+    "@typescript-eslint/no-shadow": "on"
+  }
 }
