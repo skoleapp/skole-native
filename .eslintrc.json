@@ -4,23 +4,19 @@
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["react", "simple-import-sort", "@typescript-eslint"],
   "rules": {
+    "simple-import-sort/imports": "error", // Require imports to be ordered correctly.
+    "simple-import-sort/exports": "error", // Require exports to be ordered correctly
     "import/prefer-default-export": "off", // Allows us to use named exports.
     "import/extensions": "off", // Import with file extensions.
     "import/no-unresolved": "off", // Import from non-module files.
-    // The rules below are not enabled by default, resulting in an ESLint error.
-    "@typescript-eslint/no-loop-func": "on",
-    "@typescript-eslint/no-redeclare": "on",
-    "@typescript-eslint/no-shadow": "on"
+    "@typescript-eslint/ban-ts-comment": "off" // Allows us to make TS ignores with ignore comments.
   }
 }
