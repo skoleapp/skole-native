@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "skole-icon-text.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "skole-icon-text@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "skole-icon-text@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

@@ -10,6 +10,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Added
 
 - Configure push notifications.
+- Add splash icon.
+
+### Removed
+
+- Remove pull-to-refresh feature.
 
 ## [1.0.2] - 2021-01-18
 
