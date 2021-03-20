@@ -17,7 +17,8 @@ Other useful documentation:
 
 ## Requirements
 
-- [Xcode](https://developer.apple.com/xcode/) (iOS)
+- [Node](https://nodejs.org/en)
+- [Xcode](https://developer.apple.com/xcode) (iOS)
 - [Android Studio](https://developer.android.com/studio) (Android)
 - [CocoaPods](https://cocoapods.org) (iOS)
 - [JDK](https://www.oracle.com/java/technologies/javase-downloads.html) (Android)
