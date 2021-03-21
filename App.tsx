@@ -1,7 +1,7 @@
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import React, { useEffect, useRef } from 'react';
 import { BackHandler, Linking } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import RNBootSplash from 'react-native-bootsplash';
 import WebView, { WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 
 const USER_AGENT = 'skole-native-app';
@@ -18,7 +18,7 @@ export const App: React.FC = () => {
     webViewRef.current?.postMessage(JSON.stringify({ key: 'NOTIFICATION_OPENED', data }));
 
   useEffect(() => {
-    SplashScreen.hide(); // https://github.com/crazycodeboy/react-native-splash-screen#usage
+    RNBootSplash.hide({ fade: true }); // https://github.com/zoontek/react-native-bootsplash#usage
 
     // Request push notification permission on iOS: https://rnfirebase.io/messaging/usage#ios---requesting-permissions
     messaging().requestPermission();
@@ -27,8 +27,10 @@ export const App: React.FC = () => {
     messaging().onNotificationOpenedApp(handleNotificationOpened);
 
     // @ts-ignore: `BackHandler` expects `boolean | void | null` type for the event handler return type.
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    return (): void => backHandler.remove();
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    // @ts-ignore: Same as above.
+    return (): void => BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
 
   // Prevent opening the blogs in the app and open them externally in the browser instead.
