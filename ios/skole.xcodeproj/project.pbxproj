@@ -17,8 +17,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* skoleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* skoleTests.m */; };
 		30B5098989A43BAF9B29A2FB /* libPods-skole-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 257CE6255796A81902DE617F /* libPods-skole-tvOSTests.a */; };
 		4591E725593A8540D427588D /* libPods-skole-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E3D74A8BF66B558E04DD502 /* libPods-skole-tvOS.a */; };
+		473CBE1D260769720088D897 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 473CBE1C260769720088D897 /* BootSplash.storyboard */; };
 		47F2414525FD178F00458E47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47F2414425FD178F00458E47 /* GoogleService-Info.plist */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BC2ED3F5AA5583BE52E19C74 /* libPods-skole-skoleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7B56C2E5400E45668BB53B /* libPods-skole-skoleTests.a */; };
 		E46C502D5896EAA19F1D9B7C /* libPods-skole.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71333D4527041E355A0E2249 /* libPods-skole.a */; };
 /* End PBXBuildFile section */
@@ -58,12 +58,12 @@
 		2D02E4901E0B4A5D006451C7 /* skole-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "skole-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D963721A224BE403E700DFE /* Pods-skole-skoleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skole-skoleTests.release.xcconfig"; path = "Target Support Files/Pods-skole-skoleTests/Pods-skole-skoleTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E3D74A8BF66B558E04DD502 /* libPods-skole-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-skole-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		473CBE1C260769720088D897 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = skole/BootSplash.storyboard; sourceTree = "<group>"; };
 		47F2414425FD178F00458E47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47F2418225FD196200458E47 /* skole.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = skole.entitlements; path = skole/skole.entitlements; sourceTree = "<group>"; };
 		4E7B56C2E5400E45668BB53B /* libPods-skole-skoleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-skole-skoleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F492C453462536A9A46CE81 /* Pods-skole-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skole-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-skole-tvOS/Pods-skole-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		71333D4527041E355A0E2249 /* libPods-skole.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-skole.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = skole/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D8336A865D5CC272E970457D /* Pods-skole-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skole-tvOS.release.xcconfig"; path = "Target Support Files/Pods-skole-tvOS/Pods-skole-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		EB84B1ADB0385CA4FC8028F4 /* Pods-skole-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skole-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-skole-tvOSTests/Pods-skole-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		ECCBAD7A283C1DCD846F59A9 /* Pods-skole.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-skole.release.xcconfig"; path = "Target Support Files/Pods-skole/Pods-skole.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,13 +128,13 @@
 		13B07FAE1A68108700A75B9A /* skole */ = {
 			isa = PBXGroup;
 			children = (
+				473CBE1C260769720088D897 /* BootSplash.storyboard */,
 				47F2418225FD196200458E47 /* skole.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = skole;
@@ -348,9 +348,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				47F2414525FD178F00458E47 /* GoogleService-Info.plist in Resources */,
+				473CBE1D260769720088D897 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

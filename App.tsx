@@ -1,8 +1,22 @@
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import React, { useEffect, useRef } from 'react';
-import { BackHandler, Linking } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  BackHandler,
+  Linking,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 import WebView, { WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
+import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
+
+const COLORS = {
+  primary: '#ad3636',
+  secondary: '#faf2de',
+};
 
 const USER_AGENT = 'skole-native-app';
 
@@ -10,15 +24,53 @@ const SOURCE = {
   uri: 'https://www.skoleapp.com',
 };
 
+type RemoteMessage = FirebaseMessagingTypes.RemoteMessage;
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+    padding: 20,
+  },
+  header: {
+    color: COLORS.secondary,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  text: {
+    color: COLORS.secondary,
+    textAlign: 'center',
+  },
+  tryAgainButton: {
+    marginTop: 20,
+    padding: 10,
+  },
+  tryAgainText: {
+    color: COLORS.secondary,
+  },
+});
+
 export const App: React.FC = () => {
   const webViewRef = useRef<WebView>(null);
+  const [webViewLoaded, setWebViewLoaded] = useState(false);
   const backAction = (): void => webViewRef.current?.goBack();
+  const handleTryAgainButtonPress = (): void => webViewRef.current?.reload();
 
-  const handleNotificationOpened = ({ data }: FirebaseMessagingTypes.RemoteMessage): void =>
+  const handleNotificationOpened = ({ data }: RemoteMessage): void =>
     webViewRef.current?.postMessage(JSON.stringify({ key: 'NOTIFICATION_OPENED', data }));
 
+  const handleLoadProgress = (e: WebViewProgressEvent): void => {
+    if (e.nativeEvent.progress === 1) {
+      setWebViewLoaded(true);
+    }
+  };
+
   useEffect(() => {
-    SplashScreen.hide(); // https://github.com/crazycodeboy/react-native-splash-screen#usage
+    RNBootSplash.hide({ fade: true }); // https://github.com/zoontek/react-native-bootsplash#usage
 
     // Request push notification permission on iOS: https://rnfirebase.io/messaging/usage#ios---requesting-permissions
     messaging().requestPermission();
@@ -27,9 +79,24 @@ export const App: React.FC = () => {
     messaging().onNotificationOpenedApp(handleNotificationOpened);
 
     // @ts-ignore: `BackHandler` expects `boolean | void | null` type for the event handler return type.
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-    return (): void => backHandler.remove();
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    // @ts-ignore: Same as above.
+    return (): void => BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
+
+  // When opening app from quit state by clicking a notification, wait until the webview has loaded.
+  useEffect(() => {
+    (async () => {
+      if (webViewLoaded) {
+        const message = await messaging().getInitialNotification();
+
+        if (message) {
+          handleNotificationOpened(message);
+        }
+      }
+    })();
+  }, [webViewLoaded]);
 
   // Prevent opening the blogs in the app and open them externally in the browser instead.
   const handleNavigationStateChange = ({ url }: WebViewNavigation): void => {
@@ -46,6 +113,24 @@ export const App: React.FC = () => {
     }
   };
 
+  const renderLoading = () => (
+    <SafeAreaView style={styles.container}>
+      <ActivityIndicator size="large" color={COLORS.secondary} />
+    </SafeAreaView>
+  );
+
+  const renderError = () => (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.header}>Offline</Text>
+      <Text style={styles.text}>
+        Make sure you have a valid internet connection and try again in a moment.
+      </Text>
+      <TouchableOpacity style={styles.tryAgainButton} onPress={handleTryAgainButtonPress}>
+        <Text style={styles.tryAgainText}>Try Again</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+
   return (
     <WebView
       ref={webViewRef}
@@ -55,6 +140,10 @@ export const App: React.FC = () => {
       decelerationRate="normal" // Enable smooth scrolling on iOS.
       onNavigationStateChange={handleNavigationStateChange}
       onMessage={handleMessage}
+      onLoadProgress={handleLoadProgress}
+      startInLoadingState
+      renderLoading={renderLoading}
+      renderError={renderError}
     />
   );
 };

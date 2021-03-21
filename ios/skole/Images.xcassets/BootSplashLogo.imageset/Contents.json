@@ -1,23 +1,23 @@
 {
   "images": [
     {
-      "filename": "skole-icon-text.png",
       "idiom": "universal",
+      "filename": "bootsplash_logo.png",
       "scale": "1x"
     },
     {
-      "filename": "skole-icon-text@2x.png",
       "idiom": "universal",
+      "filename": "bootsplash_logo@2x.png",
       "scale": "2x"
     },
     {
-      "filename": "skole-icon-text@3x.png",
       "idiom": "universal",
+      "filename": "bootsplash_logo@3x.png",
       "scale": "3x"
     }
   ],
   "info": {
-    "author": "xcode",
-    "version": 1
+    "version": 1,
+    "author": "xcode"
   }
 }

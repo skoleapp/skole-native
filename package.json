@@ -22,7 +22,7 @@
     "@react-native-firebase/messaging": "11.1.2",
     "react": "17.0.1",
     "react-native": "0.64.0",
-    "react-native-splash-screen": "3.2.0",
+    "react-native-bootsplash": "3.2.0",
     "react-native-webview": "11.3.1"
   },
   "devDependencies": {
