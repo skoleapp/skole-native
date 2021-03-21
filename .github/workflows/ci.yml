@@ -18,11 +18,11 @@ jobs:
     - name: "Check commits of the PR branch"
       run: ./.github/check_commits.sh
 
-    - uses: actions/checkout@v2
-    - name: "Run type-checking and linters"
+    - name: "Set up node"
       uses: actions/setup-node@v1
       with:
         node-version: '15.x'
+
     - run: yarn install
     - run: yarn type-check
     - run: yarn lint
