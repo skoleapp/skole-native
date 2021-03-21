@@ -1,5 +1,5 @@
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import WebView, { WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
+import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
 
 const COLORS = {
   primary: '#ad3636',
@@ -22,6 +23,8 @@ const USER_AGENT = 'skole-native-app';
 const SOURCE = {
   uri: 'https://www.skoleapp.com',
 };
+
+type RemoteMessage = FirebaseMessagingTypes.RemoteMessage;
 
 const styles = StyleSheet.create({
   container: {
@@ -53,11 +56,18 @@ const styles = StyleSheet.create({
 
 export const App: React.FC = () => {
   const webViewRef = useRef<WebView>(null);
+  const [webViewLoaded, setWebViewLoaded] = useState(false);
   const backAction = (): void => webViewRef.current?.goBack();
   const handleTryAgainButtonPress = (): void => webViewRef.current?.reload();
 
-  const handleNotificationOpened = ({ data }: FirebaseMessagingTypes.RemoteMessage): void =>
+  const handleNotificationOpened = ({ data }: RemoteMessage): void =>
     webViewRef.current?.postMessage(JSON.stringify({ key: 'NOTIFICATION_OPENED', data }));
+
+  const handleLoadProgress = (e: WebViewProgressEvent): void => {
+    if (e.nativeEvent.progress === 1) {
+      setWebViewLoaded(true);
+    }
+  };
 
   useEffect(() => {
     RNBootSplash.hide({ fade: true }); // https://github.com/zoontek/react-native-bootsplash#usage
@@ -74,6 +84,19 @@ export const App: React.FC = () => {
     // @ts-ignore: Same as above.
     return (): void => BackHandler.removeEventListener('hardwareBackPress', backAction);
   }, []);
+
+  // When opening app from quit state by clicking a notification, wait until the webview has loaded.
+  useEffect(() => {
+    (async () => {
+      if (webViewLoaded) {
+        const message = await messaging().getInitialNotification();
+
+        if (message) {
+          handleNotificationOpened(message);
+        }
+      }
+    })();
+  }, [webViewLoaded]);
 
   // Prevent opening the blogs in the app and open them externally in the browser instead.
   const handleNavigationStateChange = ({ url }: WebViewNavigation): void => {
@@ -117,6 +140,7 @@ export const App: React.FC = () => {
       decelerationRate="normal" // Enable smooth scrolling on iOS.
       onNavigationStateChange={handleNavigationStateChange}
       onMessage={handleMessage}
+      onLoadProgress={handleLoadProgress}
       startInLoadingState
       renderLoading={renderLoading}
       renderError={renderError}

@@ -11,6 +11,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Add custom offline screen.
 
+### Fixed
+
+- Fix bug of correct route not opening when clicking a push notification on quit state.
+
 ## [1.1.0] - 2021-03-20
 
 ### Added
