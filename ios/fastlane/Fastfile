@@ -1,0 +1,32 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  lane :release do
+    increment_build_number(xcodeproj: "skole.xcodeproj")
+    build_app(scheme: "skole")
+    upload_to_app_store
+    slack(message: "New App Store version deployed!")
+  end
+
+  lane :beta do
+    increment_build_number(xcodeproj: "skole.xcodeproj")
+    build_app(scheme: "skole")
+    upload_to_testflight
+    slack(message: "New TestFlight version deployed!")
+  end
+end
