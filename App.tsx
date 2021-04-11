@@ -3,14 +3,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
-  Linking,
   SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
 } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
-import WebView, { WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
+import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
 
 const COLORS = {
@@ -98,14 +97,6 @@ export const App: React.FC = () => {
     })();
   }, [webViewLoaded]);
 
-  // Prevent opening the blogs in the app and open them externally in the browser instead.
-  const handleNavigationStateChange = ({ url }: WebViewNavigation): void => {
-    if (url.includes('blogs')) {
-      webViewRef.current?.goBack();
-      Linking.openURL(url);
-    }
-  };
-
   const handleMessage = async ({ nativeEvent: { data } }: WebViewMessageEvent): Promise<void> => {
     if (data === 'GET_FCM_TOKEN') {
       const token = await messaging().getToken();
@@ -138,7 +129,6 @@ export const App: React.FC = () => {
       source={SOURCE}
       allowsBackForwardNavigationGestures // Enable back/forward gestures on iOS.
       decelerationRate="normal" // Enable smooth scrolling on iOS.
-      onNavigationStateChange={handleNavigationStateChange}
       onMessage={handleMessage}
       onLoadProgress={handleLoadProgress}
       startInLoadingState
