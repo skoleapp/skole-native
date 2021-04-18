@@ -1,0 +1,8 @@
+app_identifier("com.skoleapp.skole") # The bundle identifier of your app
+apple_id("admin@skoleapp.com") # Your Apple email address
+
+itc_team_id("122514206") # App Store Connect Team ID
+team_id("3THLJV3CK5") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
