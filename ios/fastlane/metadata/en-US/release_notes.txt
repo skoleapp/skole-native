@@ -1,1 +1,1 @@
-Added custom offline and loading screens.
+Most of the app's content comes from the web, but occasionally we'll also update the app itself to add functionalities or fix some nasty bugs.
