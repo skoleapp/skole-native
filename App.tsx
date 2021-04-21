@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
+  Platform,
   SafeAreaView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -98,9 +100,21 @@ export const App: React.FC = () => {
   }, [webViewLoaded]);
 
   const handleMessage = async ({ nativeEvent: { data } }: WebViewMessageEvent): Promise<void> => {
-    if (data === 'GET_FCM_TOKEN') {
-      const token = await messaging().getToken();
-      webViewRef.current?.postMessage(JSON.stringify({ key: 'REGISTER_FCM_TOKEN', token }));
+    try {
+      const { key, payload } = JSON.parse(data);
+
+      if (key === 'SHARE') {
+        if (Platform.OS === 'android') {
+          await Share.share(payload);
+        }
+      }
+    } catch {
+      // Data was not JSON.
+
+      if (data === 'GET_FCM_TOKEN') {
+        const token = await messaging().getToken();
+        webViewRef.current?.postMessage(JSON.stringify({ key: 'REGISTER_FCM_TOKEN', token }));
+      }
     }
   };
 
