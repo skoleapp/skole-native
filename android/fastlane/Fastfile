@@ -18,13 +18,7 @@ default_platform(:android)
 platform :android do
   lane :beta do
     gradle(task: "assemble", build_type: "Release")
-    upload_to_play_store(track: "beta")
-    slack(message: "New Play Store beta version deployed!")
-  end
-
-  lane :deploy do
-    gradle(task: "assemble", build_type: "Release")
-    upload_to_play_store
-    slack(message: "New Play Store version deployed!")
+    upload_to_play_store(track: "internal")
+    slack(message: "New Play Store internal testing version deployed!")
   end
 end

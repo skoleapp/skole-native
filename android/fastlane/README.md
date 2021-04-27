@@ -21,11 +21,6 @@ or alternatively using `brew install fastlane`
 fastlane android beta
 ```
 
-### android deploy
-```
-fastlane android deploy
-```
-
 
 ----
 

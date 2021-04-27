@@ -4,12 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android:prod": "yarn android --variant=release",
-    "android:bundle-release": "cd android && ./gradlew bundleRelease",
+    "android:beta": "cd android/ && rm -rf app/build/ && fastlane beta",
     "ios": "react-native run-ios",
-    "ios:prod": "yarn ios --configuration Release",
-    "xcode:open-workspace": "open ios/skole.xcworkspace",
-    "xcode:open-project": "open ios/skole.xcodeproj",
     "start": "react-native start",
     "type-check": "tsc",
     "format": "yarn prettier --write '**/*.{ts,tsx,js,json}'",
