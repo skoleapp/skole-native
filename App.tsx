@@ -1,5 +1,5 @@
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   BackHandler,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
-import { WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
+import { WebViewNavigation, WebViewProgressEvent } from 'react-native-webview/lib/WebViewTypes';
 
 const COLORS = {
   primary: '#ad3636',
@@ -20,10 +20,7 @@ const COLORS = {
 };
 
 const USER_AGENT = 'skole-native-app';
-
-const SOURCE = {
-  uri: 'https://www.skoleapp.com',
-};
+const SOURCE = 'https://www.skoleapp.com';
 
 type RemoteMessage = FirebaseMessagingTypes.RemoteMessage;
 
@@ -58,8 +55,27 @@ const styles = StyleSheet.create({
 export const App: React.FC = () => {
   const webViewRef = useRef<WebView>(null);
   const [webViewLoaded, setWebViewLoaded] = useState(false);
-  const backAction = (): void => webViewRef.current?.goBack();
+
+  const [webViewNavigationState, setWebViewNavigationState] = useState<WebViewNavigation | null>(
+    null,
+  );
+
   const handleTryAgainButtonPress = (): void => webViewRef.current?.reload();
+
+  // When using hardware back button in landing or home page on Android, exit the app.
+  // Otherwise navigate back in the webview.
+  // https://reactnative.dev/docs/backhandler#pattern
+  const backAction = useCallback((): boolean => {
+    if (
+      webViewNavigationState?.url &&
+      [SOURCE, `${SOURCE}/home`].includes(webViewNavigationState?.url)
+    ) {
+      return false;
+    }
+
+    webViewRef.current?.goBack();
+    return true;
+  }, [webViewNavigationState?.url]);
 
   const handleNotificationOpened = ({ data }: RemoteMessage): void =>
     webViewRef.current?.postMessage(JSON.stringify({ key: 'NOTIFICATION_OPENED', data }));
@@ -84,7 +100,7 @@ export const App: React.FC = () => {
 
     // @ts-ignore: Same as above.
     return (): void => BackHandler.removeEventListener('hardwareBackPress', backAction);
-  }, []);
+  }, [backAction]);
 
   // When opening app from quit state by clicking a notification, wait until the webview has loaded.
   useEffect(() => {
@@ -140,7 +156,7 @@ export const App: React.FC = () => {
     <WebView
       ref={webViewRef}
       userAgent={USER_AGENT}
-      source={SOURCE}
+      source={{ uri: SOURCE }}
       allowsBackForwardNavigationGestures // Enable back/forward gestures on iOS.
       decelerationRate="normal" // Enable smooth scrolling on iOS.
       onMessage={handleMessage}
@@ -148,6 +164,7 @@ export const App: React.FC = () => {
       startInLoadingState
       renderLoading={renderLoading}
       renderError={renderError}
+      onNavigationStateChange={setWebViewNavigationState}
     />
   );
 };
